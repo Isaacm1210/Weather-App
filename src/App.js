@@ -12,6 +12,7 @@ function App() {
   const [forecast, setForcast] = useState('')
   const [location, setLocation] = useState(defaultLocation);
   const [loading, setLoading] = useState(true)
+  const [ unit, setUnit ] = useState('c');
 
   const getWeatherData = async () => {
     const response = await fetch(apitUrl);
@@ -29,27 +30,42 @@ function App() {
         setLocation(weather.location.name);
         setLoading(false);
       });
-      
+
   }, []);
 
+  const changeUnit = () =>{
+    if(unit === 'c'){
+      setUnit('f');
+    }
+    else{
+      setUnit('c');
+    }
+  }
 
   return (
-    <div className='w-screen h-screen' style={style.style}>
-      {(loading) ? (
-        ""
-      ) : (
-        <div className='w-1/2 m-auto'>
-          <h1 className='text-center text-6xl'>{location}</h1>
-          <Temperature current={current} />
+    <div className='h-full flex  flex-col' style={style.style}>
+      <button className='mx-auto mt-10 border-white border border-opacity-50 bg-white bg-opacity-20 rounded-sm w-32 unit' onClick={changeUnit}>Change Unit</button>
+      <div>
+        {(loading) ? (
+          ""
+        ) : (
+          <div className='w-1/2 mx-auto my-10'>
+
+            <h1 className='text-center text-3xl'>{location}</h1>
+            <Temperature current={current} unit={unit}/>
+
+          </div>
+        )}
+        <div className=' min-w-48 w-1/2 mx-auto'>
+          {forecast && (
+            forecast.map((elem, index) => (
+              <div key={index}>
+                <Forcast elem={elem} unit={unit}/>
+              </div>
+            ))
+          )}
         </div>
-      )}
-      {forecast && (
-        forecast.map((elem, index) => (
-          <div key={index}>
-            <Forcast elem={elem}/>
-            </div>
-        ))
-      )}
+      </div>
     </div>
   );
 }

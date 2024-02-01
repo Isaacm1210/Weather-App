@@ -1,7 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+html{
+  box-sizing: border-box;
+  width: 100vw;
+  scroll-behavior: smooth;
+  min-width: 200px;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',
@@ -19,7 +24,8 @@ code {
     monospace;
 }
 
-.root{
-  height: 100vh;
+#root{
+  height: 100%;
   width: 100%;
+  min-width: 200px;
 }
